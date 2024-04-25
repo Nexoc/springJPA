@@ -6,6 +6,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "people")
@@ -30,9 +31,19 @@ public class Person {
     @Email
     private String email;
 
+    @Enumerated(EnumType.ORDINAL)
+    private Mood mood;
+
     @OneToMany(mappedBy = "owner")
     private List<Item> items;
 
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
 
     public Person() {
     }
@@ -75,6 +86,14 @@ public class Person {
         this.email = email;
     }
 
+    public Mood getMood() {
+        return mood;
+    }
+
+    public void setMood(Mood mood) {
+        this.mood = mood;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -83,5 +102,18 @@ public class Person {
                 ", name='" + name + '\'' +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id == person.id && age == person.age && Objects.equals(name, person.name) && Objects.equals(email, person.email) && mood == person.mood;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, age, email, mood);
     }
 }

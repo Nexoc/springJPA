@@ -1,5 +1,6 @@
 package at.davl.spring.services;
 
+import at.davl.spring.models.Mood;
 import at.davl.spring.models.Person;
 import at.davl.spring.repositories.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class PeopleService {
 
     @Transactional
     public Person save(Person person) {
+        person.setMood(Mood.CALM);
         return peopleRepository.save(person);
     }
 
@@ -49,4 +51,6 @@ public class PeopleService {
         System.out.println("Testing here with debug. Inside Hibernate Transaction");
 
     }
+
+
 }

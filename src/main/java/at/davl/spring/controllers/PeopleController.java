@@ -20,12 +20,14 @@ public class PeopleController {
     //private final PersonDAO personDAO;
     private final PeopleService peopleService;
     private final ItemService itemService;
+    private final PersonDAO personDAO;
 
     @Autowired
-    public PeopleController(PersonDAO personDAO, PeopleService peopleService, ItemService itemService) {
+    public PeopleController(PersonDAO personDAO, PeopleService peopleService, ItemService itemService, PersonDAO personDAO1) {
         this.peopleService = peopleService;
         //this.personDAO = personDAO;
         this.itemService = itemService;
+        this.personDAO = personDAO1;
     }
 
     @GetMapping()
@@ -37,8 +39,6 @@ public class PeopleController {
         itemService.findByOwner(peopleService.findAll().get(0));
 
         peopleService.test();
-
-
 
         return "people/index";
     }
