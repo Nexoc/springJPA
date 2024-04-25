@@ -1,5 +1,6 @@
 package at.davl.spring.controllers;
 
+import at.davl.spring.services.ItemService;
 import at.davl.spring.services.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,17 +19,27 @@ public class PeopleController {
 
     //private final PersonDAO personDAO;
     private final PeopleService peopleService;
+    private final ItemService itemService;
 
     @Autowired
-    public PeopleController(PersonDAO personDAO, PeopleService peopleService) {
+    public PeopleController(PersonDAO personDAO, PeopleService peopleService, ItemService itemService) {
         this.peopleService = peopleService;
         //this.personDAO = personDAO;
+        this.itemService = itemService;
     }
 
     @GetMapping()
     public String index(Model model) {
-        //model.addAttribute("people", personDAO.index());
+
         model.addAttribute("people", peopleService.findAll());
+
+        itemService.findByItemName("Iphone");
+        itemService.findByOwner(peopleService.findAll().get(0));
+
+        peopleService.test();
+
+
+
         return "people/index";
     }
 
